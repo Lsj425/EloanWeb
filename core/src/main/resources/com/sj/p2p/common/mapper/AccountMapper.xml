@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.p2p.common.mapper.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.p2p.common.pojo.Account" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trade_password" property="tradePassword" jdbcType="VARCHAR" />
+    <result column="usable_amount" property="usableAmount" jdbcType="DECIMAL" />
+    <result column="frozen_amount" property="frozenAmount" jdbcType="DECIMAL" />
+    <result column="borrow_limit" property="borrowLimit" jdbcType="DECIMAL" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="unreceived_interest" property="unreceivedInterest" jdbcType="DECIMAL" />
+    <result column="unreceived_principal" property="unreceivedPrincipal" jdbcType="DECIMAL" />
+    <result column="unpaid_amount" property="unpaidAmount" jdbcType="DECIMAL" />
+    <result column="remain_borrow_limit" property="remainBorrowLimit" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="base_column">
+  	  id, trade_password, usable_amount, frozen_amount, borrow_limit, version,
+  	  unreceived_interest, unreceived_principal, unpaid_amount, remain_borrow_limit
+  </sql>
+
+  <insert id="insert" parameterType="com.sj.p2p.common.pojo.Account" useGeneratedKeys="true" keyProperty="id" >
+    insert into `account` (
+      <include refid="base_column"/>)
+    values (
+      #{id,jdbcType=BIGINT},
+      #{tradePassword,jdbcType=VARCHAR},
+      #{usableAmount,jdbcType=DECIMAL},
+      #{frozenAmount,jdbcType=DECIMAL},
+      #{borrowLimit,jdbcType=DECIMAL},
+      #{version,jdbcType=INTEGER},
+      #{unreceivedInterest,jdbcType=DECIMAL},
+      #{unreceivedPrincipal,jdbcType=DECIMAL},
+      #{unpaidAmount,jdbcType=DECIMAL},
+      #{remainBorrowLimit,jdbcType=DECIMAL})
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="base_column"/>
+    from `account`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="com.sj.p2p.common.pojo.Account" >
+    update `account`
+    set
+      trade_password = #{tradePassword,jdbcType=VARCHAR},
+      usable_amount = #{usableAmount,jdbcType=DECIMAL},
+      frozen_amount = #{frozenAmount,jdbcType=DECIMAL},
+      borrow_limit = #{borrowLimit,jdbcType=DECIMAL},
+      version = #{version,jdbcType=INTEGER},
+      unreceived_interest = #{unreceivedInterest,jdbcType=DECIMAL},
+      unreceived_principal = #{unreceivedPrincipal,jdbcType=DECIMAL},
+      unpaid_amount = #{unpaidAmount,jdbcType=DECIMAL},
+      remain_borrow_limit = #{remainBorrowLimit,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>
