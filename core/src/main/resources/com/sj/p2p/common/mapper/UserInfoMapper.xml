@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.p2p.common.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.p2p.common.pojo.UserInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="bit_state" property="bitState" jdbcType="BIGINT" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="income_grade_id" property="incomeGradeId" jdbcType="BIGINT" />
+    <result column="marriage_id" property="marriageId" jdbcType="BIGINT" />
+    <result column="kid_count_id" property="kidCountId" jdbcType="BIGINT" />
+    <result column="education_background_id" property="educationBackgroundId" jdbcType="BIGINT" />
+    <result column="auth_score" property="authScore" jdbcType="INTEGER" />
+    <result column="house_condition_id" property="houseConditionId" jdbcType="BIGINT" />
+    <result column="real_auth_id" property="realAuthId" jdbcType="BIGINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+
+    <association property="educationBackgroundItem" javaType="SystemDictionaryItem"
+                 column="education_background_id"
+                 select="com.sj.p2p.common.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+
+    <association property="incomeGradeItem" javaType="SystemDictionaryItem"
+                 column="income_grade_id"
+                 select="com.sj.p2p.common.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+
+    <association property="marriageItem" javaType="SystemDictionaryItem"
+                 column="marriage_id"
+                 select="com.sj.p2p.common.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+
+    <association property="kidCountItem" javaType="SystemDictionaryItem"
+                 column="kid_count_id"
+                 select="com.sj.p2p.common.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+
+    <association property="houseConditionItem" javaType="SystemDictionaryItem"
+                 column="house_condition_id"
+                 select="com.sj.p2p.common.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+  </resultMap>
+
+  <sql id="base_column">
+  	  id, version, bit_state, real_name, id_number, phone_number, income_grade_id, marriage_id,
+  	  kid_count_id, education_background_id, auth_score, house_condition_id, real_auth_id, email
+  </sql>
+
+  <insert id="insert" parameterType="com.sj.p2p.common.pojo.UserInfo" useGeneratedKeys="true" keyProperty="id" >
+    insert into `user_info` (
+      <include refid="base_column"/>)
+    values (
+      #{id,jdbcType=BIGINT},
+      #{version,jdbcType=INTEGER},
+      #{bitState,jdbcType=BIGINT},
+      #{realName,jdbcType=VARCHAR},
+      #{idNumber,jdbcType=VARCHAR},
+      #{phoneNumber,jdbcType=VARCHAR},
+      #{incomeGradeId,jdbcType=BIGINT},
+      #{marriageId,jdbcType=BIGINT},
+      #{kidCountId,jdbcType=BIGINT},
+      #{educationBackgroundId,jdbcType=BIGINT},
+      #{authScore,jdbcType=INTEGER},
+      #{houseConditionId,jdbcType=BIGINT},
+      #{realAuthId,jdbcType=BIGINT},
+      #{email,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="base_column"/>
+    from `user_info`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="com.sj.p2p.common.pojo.UserInfo" >
+    update `user_info`
+    set
+      version = version+1,
+      bit_state = #{bitState,jdbcType=BIGINT},
+      real_name = #{realName,jdbcType=VARCHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      income_grade_id = #{incomeGradeItem.id},
+      marriage_id = #{marriageItem.id},
+      kid_count_id = #{kidCountItem.id},
+      education_background_id = #{educationBackgroundItem.id},
+      auth_score = #{authScore,jdbcType=INTEGER} ,
+      house_condition_id = #{houseConditionId,jdbcType=BIGINT} ,
+      real_auth_id=#{realAuthId,jdbcType=BIGINT} ,
+      email=#{email}
+    where id = #{id,jdbcType=BIGINT} and version= #{version,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.p2p.common.mapper.IpLogMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.p2p.common.pojo.IpLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="login_info_id" property="loginInfoId" jdbcType="BIGINT" />
+    <result column="user_type" property="userType" jdbcType="TINYINT" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="base_column">
+  	  id, ip, state, login_info_id, user_type, login_time
+  </sql>
+
+  <insert id="insert" parameterType="com.sj.p2p.common.pojo.IpLog" useGeneratedKeys="true" keyProperty="id" >
+    insert into `ip_log` (
+      ip,
+      state,
+      username,
+      login_info_id,
+      user_type,
+      login_time
+      )
+    values (
+      #{ip,jdbcType=VARCHAR},
+      #{state,jdbcType=TINYINT},
+      #{username,jdbcType=VARCHAR},
+      #{loginInfoId,jdbcType=BIGINT},
+      #{userType,jdbcType=TINYINT},
+      #{loginTime,jdbcType=TIMESTAMP})
+  </insert>
+</mapper>

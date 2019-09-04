@@ -1,7 +1,9 @@
 package com.sj.p2p.common.service.impl;
 
 import com.sj.p2p.common.mapper.AccountMapper;
+import com.sj.p2p.common.mapper.IpLogMapper;
 import com.sj.p2p.common.mapper.LoginInfoMapper;
+import com.sj.p2p.common.mapper.UserInfoMapper;
 import com.sj.p2p.common.pojo.*;
 import com.sj.p2p.common.service.ILoginInfoService;
 import com.sj.p2p.common.util.UserContext;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @Service
 public class LoginInfoServiceImpl implements ILoginInfoService {
@@ -18,6 +21,13 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
 
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private UserInfoMapper userInfoMapper;
+
+    @Autowired
+    private IpLogMapper ipLogMapper;
+
 
     /**
      * 检查用户名是否已存在
@@ -65,9 +75,9 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
             accountMapper.insert(account);
 
             // 初始化个人资料UserInfo
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.setId(id);
-//            iUserInfoService.add(userInfo);
+            UserInfo userInfo = new UserInfo();
+            userInfo.setId(id);
+            userInfoMapper.insert(userInfo);
         } else {
             // 如果存在,直接抛错
             throw new RuntimeException("用户名已存在!");
@@ -82,23 +92,24 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
      * @param password
      */
     @Override
-    public LoginInfo login(String username, String password, HttpServletRequest request, int usertype) {
+    public LoginInfo login(String username, String password, HttpServletRequest request, int userType) {
 
-        LoginInfo loginInfo = loginInfoMapper.login(username, password, usertype);
+        LoginInfo loginInfo = loginInfoMapper.login(username, password, userType);
 
-//        Iplog iplog = new Iplog();
-//        iplog.setIp(request.getRemoteAddr());
-//        iplog.setUsername(username);
-//        iplog.setLogintime(new Date());
+        // 添加登陆日志
+        IpLog ipLog = new IpLog();
+        ipLog.setIp(request.getRemoteAddr());
+        ipLog.setUsername(username);
+        ipLog.setLoginTime(new Date());
 
         if (loginInfo != null) {
             // 将登录用户的数据，通过UserContext工具类，存放至session
             UserContext.putLoginInfo(loginInfo);
-//            iplog.setState(Iplog.LOGIN_SUCCESS);
+            ipLog.setState(IpLog.LOGIN_SUCCESS);
         } else {
-//            iplog.setState(Iplog.LOGIN_FAILED);
+            ipLog.setState(IpLog.LOGIN_FAILED);
         }
-//        iIpLogService.add(iplog);
+        ipLogMapper.insert(ipLog);
         return loginInfo;
 
     }

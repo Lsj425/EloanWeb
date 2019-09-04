@@ -15,7 +15,7 @@ public interface LoginInfoMapper {
     int selectCountByUsername(String username);
 
     /**
-     * 插入个人资料
+     * 插入登陆资料
      *
      * @param loginInfo
      */

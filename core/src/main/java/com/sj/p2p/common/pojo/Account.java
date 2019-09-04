@@ -13,17 +13,17 @@ public class Account {
 
     private BigDecimal frozenAmount = SysConstant.ZERO; // 冻结资金
 
-    private BigDecimal borrowLimit = SysConstant.INIT_BORROW_LIMIT; // 可借金额
+    private BigDecimal borrowLimit = SysConstant.INIT_BORROW_LIMIT; // 授信额度
 
-    private Integer version = 0;
+    private Integer version = 0; // 乐观锁标志
 
     private BigDecimal unreceivedInterest = SysConstant.ZERO; // 待收利息
 
-    private BigDecimal unreceivedPrincipal = SysConstant.ZERO; //
+    private BigDecimal unreceivedPrincipal = SysConstant.ZERO; // 待收本金
 
-    private BigDecimal unpaidAmount = SysConstant.ZERO;
+    private BigDecimal unpaidAmount = SysConstant.ZERO; // 待还金额
 
-    private BigDecimal remainBorrowLimit = SysConstant.ZERO;
+    private BigDecimal remainBorrowLimit = SysConstant.ZERO; // 账户剩余授信额度
 
     public Long getId() {
         return id;

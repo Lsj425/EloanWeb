@@ -54,7 +54,7 @@
                             用户名
                         </label>
                         <div class="col-sm-8">
-                            <p class="form-control-static">${logininfo.username}</p>
+                            <p class="form-control-static">${loginInfo.username}</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -98,7 +98,7 @@
                             手机号码
                         </label>
                         <div class="col-sm-8">
-                            <label style="width: 250px;" class="form-control">${(userInfo.phonenumber)!''}</label>
+                            <label style="width: 250px;" class="form-control">${(userInfo.phoneNumber)!''}</label>
                         </div>
                     </div>
 
@@ -107,14 +107,14 @@
                             个人学历
                         </label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="educationbackgroundItem" name="educationbackgroundItem.id"
+                            <select class="form-control" id="educationBackgroundItem" name="educationBackgroundItem.id"
                                     style="width: 180px" autocomplate="off">
                                 <#list educationBackgrounds as item>
                                     <option value="${item.id}">${item.title}</option>
                                 </#list>
                             </select>
                             <script type="text/javascript">
-                                $("#educationbackgroundItem option[value=${(userInfo.educationbackgroundItem.id)!-1}]").attr("selected", true);
+                                $("#educationBackgroundItem option[value=${(userInfo.educationBackgroundItem.id)!-1}]").attr("selected", true);
                             </script>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                             月收入
                         </label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="incomegradeItem" name="incomegradeItem.id"
+                            <select class="form-control" id="incomeGradeItem" name="incomeGradeItem.id"
                                     style="width: 180px"
                                     autocomplate="off">
                                 <#list incomeGrades as item>
@@ -132,7 +132,7 @@
                                 </#list>
                             </select>
                             <script type="text/javascript">
-                                $("#incomegradeItem option[value=${(userInfo.incomegradeItem.id)!-1}]").attr("selected", true);
+                                $("#incomeGradeItem option[value=${(userInfo.incomeGradeItem.id)!-1}]").attr("selected", true);
                             </script>
                         </div>
                     </div>
@@ -159,14 +159,14 @@
                             子女情况
                         </label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="kidcountItem" name="kidcountItem.id" style="width: 180px"
+                            <select class="form-control" id="kidCountItem" name="kidCountItem.id" style="width: 180px"
                                     autocomplate="off">
                                 <#list kidCounts as item>
                                     <option value="${item.id}">${item.title}</option>
                                 </#list>
                             </select>
                             <script type="text/javascript">
-                                $("#kidcountItem option[value=${(userInfo.kidcountItem.id)!-1}]").attr("selected", true);
+                                $("#kidCountItem option[value=${(userInfo.kidCountItem.id)!-1}]").attr("selected", true);
                             </script>
                         </div>
                     </div>
@@ -176,14 +176,14 @@
                             住房条件
                         </label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="houseconditionItem" name="houseconditionItem.id"
+                            <select class="form-control" id="houseConditionItem" name="houseConditionItem.id"
                                     style="width: 180px" autocomplate="off">
                                 <#list houseConditions as item>
                                     <option value="${item.id}">${item.title}</option>
                                 </#list>
                             </select>
                             <script type="text/javascript">
-                                $("#houseconditionItem option[value=${(userInfo.houseconditionItem.id)!-1}]").attr("selected", true);
+                                $("#houseConditionItem option[value=${(userInfo.houseConditionItem.id)!-1}]").attr("selected", true);
                             </script>
                         </div>
                     </div>

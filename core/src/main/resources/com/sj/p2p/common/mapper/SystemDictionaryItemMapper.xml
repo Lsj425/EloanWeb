@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.p2p.common.mapper.SystemDictionaryItemMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.p2p.common.pojo.SystemDictionaryItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="t_value" property="tValue" jdbcType="VARCHAR" />
+    <result column="sequence" property="sequence" jdbcType="TINYINT" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    id, parent_id, title, t_value, sequence, intro
+    from `system_dictionary_item`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectFirstThreeCol" resultMap="BaseResultMap">
+    select item.id,item.parent_id,item.title
+    from system_dictionary_item item,system_dictionary dic
+    where item.parent_id=dic.id
+  </select>
+</mapper>
