@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.p2p.common.mapper.MailVerifyMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.p2p.common.pojo.MailVerify" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="login_info_id" property="loginInfoId" jdbcType="BIGINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="base_column">
+      id, login_info_id, email, send_time, uuid
+   </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from `mail_verify`
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.sj.p2p.common.pojo.MailVerify" useGeneratedKeys="true" keyProperty="id" >
+    insert into `mail_verify` (
+      login_info_id,
+      email,
+      send_time,
+      uuid)
+    values (
+      #{loginInfoId,jdbcType=BIGINT},
+      #{email,jdbcType=VARCHAR},
+      #{sendTime,jdbcType=TIMESTAMP},
+      #{uuid,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.sj.p2p.common.pojo.MailVerify" >
+    update `mail_verify`
+    set
+      login_info_id = #{loginInfoId,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      uuid = #{uuid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="base_column"/>
+    from `mail_verify`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="base_column"/>
+    from `mail_verify`
+  </select>
+
+  <select id="selectByUUID" resultMap="BaseResultMap">
+    select
+    <include refid="base_column"/>
+    from `mail_verify`
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -14,6 +14,7 @@ public interface AccountMapper {
 
     /**
      * 主键查询
+     *
      * @param id
      * @return
      */
@@ -21,6 +22,7 @@ public interface AccountMapper {
 
     /**
      * 主键更新
+     *
      * @param record
      * @return
      */

@@ -56,12 +56,12 @@
                 <div class="form-group">
                     <label>时间范围</label>
                     <input type="text" class="form-control beginDate" name="beginDate"
-                           value='${(iplogQueryObject.beginDate?string("yyyy-MM-dd"))!""}'/>
+                           value='${(ipLogQueryObject.beginDate?string("yyyy-MM-dd"))!""}'/>
                 </div>
                 <div class="form-group">
                     <label></label>
                     <input type="text" class="form-control endDate" name="endDate"
-                           value='${(iplogQueryObject.endDate?string("yyyy-MM-dd"))!""}'/>
+                           value='${(ipLogQueryObject.endDate?string("yyyy-MM-dd"))!""}'/>
                 </div>
                 <div class="form-group">
                     <label>状态</label>
@@ -71,7 +71,7 @@
                         <option value="1">登录成功</option>
                     </select>
                     <script type="text/javascript">
-                        $("#state option[value=${iplogQueryObject.state}]").attr("selected", true);
+                        $("#state option[value=${ipLogQueryObject.state}]").attr("selected", true);
                     </script>
                 </div>
                 <div class="form-group">
@@ -96,7 +96,7 @@
                     <#list pageResultSet.listData as item >
                         <tr>
                             <td>${item.username}</td>
-                            <td>${item.logintime?string("yyyy-MM-dd HH:mm:ss")}</td>
+                            <td>${item.loginTime?string("yyyy-MM-dd HH:mm:ss")}</td>
                             <td>${item.ip}</td>
                             <td>${(item.state == 1)?string('登录成功','登录失败') }</td>
                         </tr>

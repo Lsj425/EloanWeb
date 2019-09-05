@@ -11,38 +11,61 @@
   </resultMap>
 
    <sql id="base_column">
-  	  id, username, password, state, user_type
+      id, username, password, state, user_type,admin
    </sql>
 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select
+      <include refid="base_column"/>
+    from `login_info`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
   <select id="selectCountByUsername" parameterType="java.lang.String" resultType="int">
-      select count(*)
-      from `login_info`
-      where username = #{username,jdbcType=VARCHAR}
+    select count(*)
+    from `login_info`
+    where username = #{username,jdbcType=VARCHAR}
   </select>
 
   <insert id="insert" parameterType="com.sj.p2p.common.pojo.LoginInfo" useGeneratedKeys="true"  keyProperty="id">
-      insert into
-          `login_info` (
-              username,
-              password,
-              state,
-              user_type,
-              admin)
-      values (
-           #{username,jdbcType=VARCHAR},
-           #{password,jdbcType=VARCHAR},
-           #{state,jdbcType=TINYINT},
-           #{userType,jdbcType=TINYINT},
-           #{admin,jdbcType=BIT})
+    insert into
+        `login_info` (
+            username,
+            password,
+            state,
+            user_type,
+            admin)
+    values (
+         #{username,jdbcType=VARCHAR},
+         #{password,jdbcType=VARCHAR},
+         #{state,jdbcType=TINYINT},
+         #{userType,jdbcType=TINYINT},
+         #{admin,jdbcType=BIT})
   </insert>
 
-   <select id="login" resultMap="BaseResultMap">
-      select
-      <include refid="base_column"/>
-      from `login_info`
-      where  username = #{username}
-      and password = #{password}
-      and user_type = #{userType}
-   </select>
+  <select id="login" resultMap="BaseResultMap">
+    select
+    <include refid="base_column"/>
+    from `login_info`
+    where  username = #{username}
+    and password = #{password}
+    and user_type = #{userType}
+  </select>
+
+  <select id="queryForCount" resultType="int">
+    select count(id)
+    from `login_info`
+  </select>
+
+  <select id="queryForPage" resultMap="BaseResultMap">
+    select
+        username,
+        state,
+        user_type,
+        admin
+    from `login_info`
+    ORDER BY username DESC
+    LIMIT #{start},#{pageSize}
+  </select>
 
 </mapper>

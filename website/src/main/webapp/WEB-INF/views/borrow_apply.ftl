@@ -39,7 +39,7 @@
                         required: true,
                         number: true,
                         min:${minBidRequestAmount},
-                        max:${account.remainborrowlimit?string("##.00")}
+                        max:${account.remainBorrowLimit?string("##.00")}
                     },
                     currentRate: {
                         required: true,
@@ -103,7 +103,7 @@
     <div class="el-tip-info">
         <h3>信用借款</h3>
         <p>
-            <span class="text-info">可借金额：</span><span class="text-danger">${account.remainborrowlimit}</span>
+            <span class="text-info">可借金额：</span><span class="text-danger">${account.remainBorrowLimit}</span>
         </p>
     </div>
 

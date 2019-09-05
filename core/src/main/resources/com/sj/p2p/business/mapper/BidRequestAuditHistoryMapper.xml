@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.p2p.business.mapper.BidRequestAuditHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.p2p.business.pojo.BidRequestAuditHistory" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="bid_request_id" property="bidRequestId" jdbcType="BIGINT" />
+    <result column="audit_type" property="auditType" jdbcType="TINYINT" />
+
+    <association property="applier" javaType="com.sj.p2p.common.pojo.LoginInfo"
+                 column="applier_id"
+                 select="com.sj.p2p.common.mapper.LoginInfoMapper.selectByPrimaryKey"/>
+
+    <association property="auditor" javaType="com.sj.p2p.common.pojo.LoginInfo"
+                 column="auditor_id"
+                 select="com.sj.p2p.common.mapper.LoginInfoMapper.selectByPrimaryKey"/>
+  </resultMap>
+
+  <sql id="base_column">
+    id, state, remark, audit_time, apply_time,
+    auditor_id, applier_id, bid_request_id, audit_type
+  </sql>
+
+  <insert id="insert" parameterType="com.sj.p2p.business.pojo.BidRequestAuditHistory" useGeneratedKeys="true" keyProperty="id" >
+    insert into `bid_request_audit_history` (
+      <include refid="base_column"/>)
+    values (
+      #{id,jdbcType=BIGINT},
+      #{state,jdbcType=TINYINT},
+      #{remark,jdbcType=VARCHAR},
+      #{applyTime,jdbcType=TIMESTAMP},
+      #{applyTime,jdbcType=TIMESTAMP},
+      #{auditor.id,jdbcType=BIGINT},
+      #{applier.id,jdbcType=BIGINT},
+      #{bidRequestId,jdbcType=BIGINT},
+      #{auditType,jdbcType=TINYINT})
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+      <include refid="base_column"/>
+    from `bid_request_audit_history`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAllByRequestId" resultMap="BaseResultMap">
+    select
+      <include refid="base_column"/>
+    from `bid_request_audit_history`
+    where bid_request_id=#{id}
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="com.sj.p2p.business.pojo.BidRequestAuditHistory" >
+    update `bid_request_audit_history`
+    set
+      state = #{state,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      audit_time = #{audittime,jdbcType=TIMESTAMP},
+      apply_time = #{applytime,jdbcType=TIMESTAMP},
+      auditor_id = #{auditorId,jdbcType=BIGINT},
+      applier_id = #{applierId,jdbcType=BIGINT},
+      bid_request_id = #{bidrequestid,jdbcType=BIGINT},
+      audit_type = #{audittype,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

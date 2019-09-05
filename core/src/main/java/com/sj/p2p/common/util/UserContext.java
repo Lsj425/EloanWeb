@@ -2,6 +2,7 @@ package com.sj.p2p.common.util;
 
 
 import com.sj.p2p.common.pojo.LoginInfo;
+import com.sj.p2p.common.vo.VerifyCodeVO;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -48,17 +49,17 @@ public class UserContext {
     /*
      * 得到session,并把verifyCodeVO存放到session中
      */
-//    public static void putVerifyCode(VerifyCodeVO verifyCodeVO) {
-//        getSession().setAttribute(VERIFYCODE_IN_SESSION, verifyCodeVO);
-//    }
+    public static void putVerifyCode(VerifyCodeVO verifyCodeVO) {
+        getSession().setAttribute(VERIFYCODE_IN_SESSION, verifyCodeVO);
+    }
 
     /*
      * 取出session中的verifyCodeVO
      */
-//    public static VerifyCodeVO getVerifyCode() {
-//        VerifyCodeVO verifyCodeVO = (VerifyCodeVO) getSession().getAttribute(VERIFYCODE_IN_SESSION);
-//        return verifyCodeVO;
-//    }
+    public static VerifyCodeVO getVerifyCode() {
+        VerifyCodeVO verifyCodeVO = (VerifyCodeVO) getSession().getAttribute(VERIFYCODE_IN_SESSION);
+        return verifyCodeVO;
+    }
 
 
 }

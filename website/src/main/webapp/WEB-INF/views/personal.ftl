@@ -216,18 +216,17 @@
 											</div>
 											<div class="el-accoun-auth-right">
 												<h5>手机认证</h5>
-												<a href="./realAuth.do" id="">立刻绑定</a>
-												<#--<#if userinfo.isBindPhone >-->
-												<#--<p>-->
-													<#--已认证-->
-													<#--<a href="#">查看</a>-->
-												<#--</p>-->
-												<#--<#else>-->
-												<#--<p>-->
-													<#--未认证-->
-													<#--<a href="javascript:;" id="showBindPhoneModal">立刻绑定</a>-->
-												<#--</p>-->
-												<#--</#if>-->
+												<#if userInfo.isBindPhone >
+												<p>
+													已认证
+													<a href="#">查看</a>
+												</p>
+												<#else>
+												<p>
+													未认证
+													<a href="javascript:;" id="showBindPhoneModal">立刻绑定</a>
+												</p>
+												</#if>
 											</div>
 											<div class="clearfix"></div>
 											<p class="info">可以收到系统操作信息,并增加使用安全性</p>
@@ -240,19 +239,17 @@
 											</div>
 											<div class="el-accoun-auth-right">
 												<h5>邮箱认证</h5>
-												未绑定
-												<a href="javascript:;" id="showBindEmailModal">去绑定</a>
-												<#--<#if userinfo.isBindEmail>-->
-												<#--<p>-->
-													<#--已绑定-->
-													<#--<a href="#">查看</a>-->
-												<#--</p>-->
-												<#--<#else>-->
-												<#--<p>-->
-													<#--未绑定-->
-													<#--<a href="javascript:;" id="showBindEmailModal">去绑定</a>-->
-												<#--</p>-->
-												<#--</#if>-->
+												<#if userInfo.isBindEmail>
+												<p>
+													已绑定
+													<a href="#">查看</a>
+												</p>
+												<#else>
+												<p>
+													未绑定
+													<a href="javascript:;" id="showBindEmailModal">去绑定</a>
+												</p>
+												</#if>
 											</div>
 											<div class="clearfix"></div>
 											<p class="info">您可以设置邮箱来接收重要信息</p>

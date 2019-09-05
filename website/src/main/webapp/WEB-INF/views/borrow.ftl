@@ -22,13 +22,13 @@
 				</div>
 				<div class="el-borrow-item-content">
 					<p>
-						认证后可借金额 <i>¥ ${account.remainborrowlimit}</i>
+						认证后可借金额 <i>¥ ${account.remainBorrowLimit}</i>
 					</p>
 					<a href="#" class="text-primary">申请条件</a>
 					<p class="help-block">仅限成都地区</p>
 					<ul>
 						<li>
-							<#if !(userinfo.isBasicInfo)>
+							<#if !(userInfo.isBasicInfo)>
 								<a href="./userInfo.do">填写基本资料</a>
 								<span class="glyphicon glyphicon-remove" style="color:red;"></span>
 							<#else>
@@ -36,7 +36,7 @@
 							</#if>
 						</li>
 						<li>
-							<#if !(userinfo.isBindPhone)>
+							<#if !(userInfo.isBindPhone)>
 								<a href="./personal.do">绑定手机</a>
 								<span class="glyphicon glyphicon-remove" style="color:red;"></span>
 							<#else>
@@ -44,7 +44,7 @@
 							</#if>
 						</li>
 						<li>
-							<#if !(userinfo.isBindEmail)>
+							<#if !(userInfo.isBindEmail)>
 								<a href="./personal.do">绑定邮箱</a>
 								<span class="glyphicon glyphicon-remove" style="color:red;"></span>
 							<#else>
@@ -52,8 +52,8 @@
 							</#if>
 						</li>
 						<li>
-							<#if (userinfo.authscore<creditBorrowScore)>
-								<a href="#">userinfo.authscore${userinfo.authscore}分</a>
+							<#if (userInfo.authScore<creditBorrowScore)>
+								<a href="#">userInfo.authScore${userInfo.authScore}分</a>
 								<a href="#">材料认证分数达到${creditBorrowScore}分</a>
 								<span class="glyphicon glyphicon-remove" style="color:red;"></span>
 							<#else>
@@ -61,8 +61,8 @@
 							</span></#if>
 						</li>
 					</ul>
-					<#if userinfo.isBasicInfo && userinfo.isBindPhone && userinfo.isBindEmail
-					        && (userinfo.authscore >= creditBorrowScore) >
+					<#if userInfo.isBasicInfo && userInfo.isBindPhone && userInfo.isBindEmail
+					        && (userInfo.authScore >= creditBorrowScore) >
 						<a href="./borrowInfo.do" class="el-borrow-apply">
 							申请贷款
 						</a>

@@ -32,4 +32,54 @@
       #{userType,jdbcType=TINYINT},
       #{loginTime,jdbcType=TIMESTAMP})
   </insert>
+
+  <select id="queryForUserIpLogCount" resultType="Integer">
+    select count(id)
+    from `ip_log`
+    <where>
+      <if test="username != null and username != ''">
+        username = #{username}
+      </if>
+      <if test="ipLogQueryObject.state != null and ipLogQueryObject.state != -1">
+        AND state = #{ipLogQueryObject.state}
+      </if>
+      <if test="ipLogQueryObject.beginDate != null">
+        AND login_time >= #{ipLogQueryObject.beginDate}
+      </if>
+      <if test="ipLogQueryObject.endDate != null">
+        AND login_time &lt;= #{ipLogQueryObject.endDate}
+      </if>
+      <if test="ipLogQueryObject.beginDate != null and ipLogQueryObject.endDate != null">
+        AND login_time between #{ipLogQueryObject.beginDate} and #{ipLogQueryObject.endDate}
+      </if>
+    </where>
+  </select>
+
+  <select id="queryForUserIpPage" resultMap="BaseResultMap">
+    select
+      username,
+      login_time,
+      ip,
+      state
+    from `ip_log`
+    <where>
+      <if test="username != null and username != ''">
+        username = #{username}
+      </if>
+      <if test="ipLogQueryObject.state != null and ipLogQueryObject.state != -1">
+        AND state = #{ipLogQueryObject.state}
+      </if>
+      <if test="ipLogQueryObject.beginDate != null">
+        AND login_time >= #{ipLogQueryObject.beginDate}
+      </if>
+      <if test="ipLogQueryObject.endDate != null">
+        AND login_time &lt;= #{ipLogQueryObject.endDate}
+      </if>
+      <if test="ipLogQueryObject.beginDate != null and ipLogQueryObject.endDate != null">
+        AND login_time between #{ipLogQueryObject.beginDate} and #{ipLogQueryObject.endDate}
+      </if>
+    </where>
+    ORDER BY login_time DESC
+    LIMIT #{ipLogQueryObject.start},#{ipLogQueryObject.pageSize}
+  </select>
 </mapper>

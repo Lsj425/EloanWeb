@@ -1,6 +1,8 @@
 package com.sj.p2p.common.service;
 
 import com.sj.p2p.common.pojo.LoginInfo;
+import com.sj.p2p.common.query.LoginInfoQueryObject;
+import com.sj.p2p.common.query.PageResultSet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,4 +34,12 @@ public interface ILoginInfoService {
      * @return
      */
     LoginInfo login(String username, String password, HttpServletRequest request, int userType);
+
+    /**
+     * 所有用户信息分页查询
+     *
+     * @param loginInfoQueryObject
+     * @return
+     */
+    PageResultSet queryForPage(LoginInfoQueryObject loginInfoQueryObject);
 }

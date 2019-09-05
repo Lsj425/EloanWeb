@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.p2p.business.mapper.BidRequestMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.p2p.business.pojo.BidRequest" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="bid_request_type" property="bidRequestType" jdbcType="TINYINT" />
+    <result column="bid_request_state" property="bidRequestState" jdbcType="TINYINT" />
+    <result column="bid_request_amount" property="bidRequestAmount" jdbcType="DECIMAL" />
+    <result column="current_rate" property="currentRate" jdbcType="DECIMAL" />
+    <result column="monthes2_return" property="monthes2Return" jdbcType="TINYINT" />
+    <result column="bid_count" property="bidCount" jdbcType="INTEGER" />
+    <result column="total_reward_amount" property="totalRewardAmount" jdbcType="DECIMAL" />
+    <result column="current_sum" property="currentSum" jdbcType="DECIMAL" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="disable_date" property="disableDate" jdbcType="TIMESTAMP" />
+    <result column="disable_days" property="disableDays" jdbcType="TINYINT" />
+    <result column="min_bid_amount" property="minBidAmount" jdbcType="DECIMAL" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="return_type" property="returnType" jdbcType="TINYINT" />
+
+    <association property="createUser" javaType="com.sj.p2p.common.pojo.LoginInfo"
+                 column="create_user_id"
+                 select="com.sj.p2p.common.mapper.LoginInfoMapper.selectByPrimaryKey"/>
+  </resultMap>
+
+  <sql id="base_column">
+    id, version, bid_request_type, bid_request_state, bid_request_amount, current_rate,
+    monthes2_return, bid_count, total_reward_amount, current_sum, title, description,
+    note, disable_date, create_user_id, disable_days, min_bid_amount, apply_time, publish_time, return_type
+  </sql>
+
+  <insert id="insert" parameterType="com.sj.p2p.business.pojo.BidRequest" useGeneratedKeys="true" keyProperty="id" >
+    insert into `bid_request` (
+      <include refid="base_column"/>)
+    values (
+      #{id},
+      #{version,jdbcType=INTEGER},
+      #{bidRequestType,jdbcType=TINYINT},
+      #{bidRequestState,jdbcType=TINYINT},
+      #{bidRequestAmount,jdbcType=DECIMAL},
+      #{currentRate,jdbcType=DECIMAL},
+      #{monthes2Return,jdbcType=TINYINT},
+      #{bidCount,jdbcType=INTEGER},
+      #{totalRewardAmount,jdbcType=DECIMAL},
+      #{currentSum,jdbcType=DECIMAL},
+      #{title,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},
+      #{note,jdbcType=VARCHAR},
+      #{disableDate,jdbcType=TIMESTAMP},
+      #{createUser.id,jdbcType=BIGINT},
+      #{disableDays,jdbcType=TINYINT},
+      #{minBidAmount,jdbcType=DECIMAL},
+      #{applyTime,jdbcType=TIMESTAMP},
+      #{publishTime,jdbcType=TIMESTAMP},
+      #{returnType,jdbcType=TINYINT})
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+      <include refid="base_column"/>
+    from `bid_request`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAllByState" resultMap="BaseResultMap">
+    select
+    <include refid="base_column"/>
+    from `bid_request`
+    where bid_request_state=1
+  </select>
+
+  <select id="queryForCount" resultType="int">
+    select count(id)
+    from `bid_request`
+    where bid_request_state=0
+  </select>
+
+  <select id="queryForPage" resultMap="BaseResultMap">
+    select
+        id,
+        title,
+        apply_time,
+        create_user_id,
+        bid_request_amount,
+        monthes2_return,
+        current_rate,
+        total_reward_amount,
+        bid_request_state
+    from `bid_request`
+    where bid_request_state=0
+    ORDER BY apply_time DESC
+    LIMIT #{start},#{pageSize}
+  </select>
+
+  <select id="queryForCountByState" resultType="int">
+    select count(id)
+    from `bid_request`
+    <where>
+        <if test="bidRequestQueryObject.bidRequestState == -1">
+            bid_request_state!=-2
+        </if>
+        <if test="bidRequestQueryObject.bidRequestState == 1">
+            and bid_request_state=1
+        </if>
+        <if test="bidRequestQueryObject.bidRequestState == 8">
+            AND bid_request_state=8
+        </if>
+    </where>
+  </select>
+
+  <select id="queryForPageByState" resultMap="BaseResultMap">
+    select
+      id,
+      title,
+      create_user_id,
+      current_rate,
+      bid_request_amount,
+      return_type,
+      apply_time
+    from `bid_request`
+      <where>
+          <if test="bidRequestQueryObject.bidRequestState == -1">
+              bid_request_state!=-2
+          </if>
+          <if test="bidRequestQueryObject.bidRequestState == 1">
+              AND bid_request_state=1
+          </if>
+          <if test="bidRequestQueryObject.bidRequestState == 8">
+              AND bid_request_state=8
+          </if>
+      </where>
+    ORDER BY apply_time DESC
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="com.sj.p2p.business.pojo.BidRequest" >
+    update `bid_request`
+    set
+      version = #{version,jdbcType=INTEGER},
+      bid_request_type = #{bidRequestType,jdbcType=TINYINT},
+      bid_request_state = #{bidRequestState,jdbcType=TINYINT},
+      bid_request_amount = #{bidRequestAmount,jdbcType=DECIMAL},
+      current_rate = #{currentRate,jdbcType=DECIMAL},
+      monthes2_return = #{monthes2Return,jdbcType=TINYINT},
+      bid_count = #{bidCount,jdbcType=INTEGER},
+      total_reward_amount = #{totalRewardAmount,jdbcType=DECIMAL},
+      current_sum = #{currentSum,jdbcType=DECIMAL},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      disable_date = #{disableDate,jdbcType=TIMESTAMP},
+      create_user_id = #{createUser.id,jdbcType=BIGINT},
+      disable_days = #{disableDays,jdbcType=TINYINT},
+      min_bid_amount = #{minBidAmount,jdbcType=DECIMAL},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      return_type = #{returnType,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

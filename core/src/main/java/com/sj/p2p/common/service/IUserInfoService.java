@@ -27,4 +27,26 @@ public interface IUserInfoService {
      * @param userInfo
      */
     void updateBasicInfo(UserInfo userInfo);
+
+    /**
+     * 更新用户绑定状态
+     *
+     * @param userInfo
+     */
+    void updateBitState(UserInfo userInfo);
+
+    /**
+     * 用户绑定手机
+     *
+     * @param phoneNumber
+     * @param verifyCode
+     */
+    void bindPhone(String phoneNumber, String verifyCode);
+
+    /**
+     * 绑定邮箱
+     *
+     * @param uuid
+     */
+    void bindEmail(String uuid);
 }
